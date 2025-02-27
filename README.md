@@ -1,57 +1,17 @@
-# Project Name
+# Semantic Kernel Advanced Usage
 
-(short, 1-3 sentenced, description of the project)
+## Overview
 
-## Features
+This repository contains advanced usage examples for [Semantic Kernel](https://github.com/microsoft/semantic-kernel) framework. The examples are designed to demonstrate various features and capabilities of the framework, including:
 
-This project framework provides the following features:
+- **Advanced orchestration**
+- **Dapr hosting**
+-
 
-* Feature 1
-* Feature 2
-* ...
+## Contributing
 
-## Getting Started
+This project welcomes contributions and suggestions. Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-### Prerequisites
+## License
 
-(ideally very short, if any)
-
-- OS
-- Library version
-- ...
-
-### Installation
-
-(ideally very short)
-
-- npm install [package name]
-- mvn install
-- ...
-
-### Quickstart
-(Add steps to get up and running quickly)
-
-1. git clone [repository clone url]
-2. cd [repository name]
-3. ...
-
-
-## Demo
-
-A demo app is included to show how to use the project.
-
-To run the demo, follow these steps:
-
-(Add steps to start up the demo)
-
-1.
-2.
-3.
-
-## Resources
-
-(Any additional resources or related projects)
-
-- Link to supporting information
-- Link to similar sample
-- ...
+This project is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.
