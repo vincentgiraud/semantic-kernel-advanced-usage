@@ -14,7 +14,7 @@ This repository contains advanced usage examples for [Semantic Kernel](https://g
 > [!NOTE]
 > Each scenario is self-contained and will run independently.
 
-- [`advanced_orchestration_dapr`](advanced_orchestration_dapr/readme.md): Demonstrates advanced orchestration techniques and Dapr hosting via Actors.
+- [`advanced_orchestration_dapr`](tree/main/advanced_orchestration_dapr/readme.md): Demonstrates advanced orchestration techniques and Dapr hosting via Actors.
 
 ## Contributing
 
