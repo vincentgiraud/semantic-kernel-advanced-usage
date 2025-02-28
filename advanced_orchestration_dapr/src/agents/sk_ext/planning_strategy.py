@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Annotated
 from semantic_kernel.agents import Agent
 from semantic_kernel.exceptions.agent_exceptions import AgentExecutionException
 from semantic_kernel.kernel_pydantic import KernelBaseModel
-from semantic_kernel.utils.experimental_decorator import experimental_class
 from semantic_kernel.contents.history_reducer.chat_history_reducer import (
     ChatHistoryReducer,
 )
@@ -32,7 +31,6 @@ class TeamPlan(KernelBaseModel):
     plan: Annotated[list[TeamPlanStep], "The plan to be executed by the team"]
 
 
-@experimental_class
 class PlanningStrategy(KernelBaseModel, ABC):
     """Base strategy class for creating a plan to solve the user inquiry by using the available agents."""
 
@@ -49,7 +47,6 @@ class PlanningStrategy(KernelBaseModel, ABC):
         raise AgentExecutionException("create_plan not implemented")
 
 
-@experimental_class
 class DefaultPlanningStrategy(PlanningStrategy):
     """
     Default planning strategy that uses a kernel function to create a plan to solve the user inquiry by using the available agents.

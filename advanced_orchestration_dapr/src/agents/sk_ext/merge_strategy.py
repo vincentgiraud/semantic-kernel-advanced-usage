@@ -4,14 +4,12 @@ from semantic_kernel.kernel import Kernel
 from semantic_kernel.functions.kernel_arguments import KernelArguments
 from semantic_kernel.functions.kernel_function import KernelFunction
 from semantic_kernel.kernel_pydantic import KernelBaseModel
-from semantic_kernel.utils.experimental_decorator import experimental_class
 from semantic_kernel.contents.chat_message_content import ChatMessageContent
 from semantic_kernel.contents.utils.author_role import AuthorRole
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-@experimental_class
 class MergeHistoryStrategy(KernelBaseModel):
     """A strategy for determining when a Planned Team should terminate, and provide feedback to reiterate the plan if needed."""
 
@@ -25,7 +23,6 @@ class MergeHistoryStrategy(KernelBaseModel):
         raise NotImplementedError("merge not implemented")
 
 
-@experimental_class
 class LastMessageMergeHistoryStrategy(MergeHistoryStrategy):
     """A strategy that merges the last message from the original history with the new history."""
 
@@ -40,7 +37,6 @@ class LastMessageMergeHistoryStrategy(MergeHistoryStrategy):
         return delta
 
 
-@experimental_class
 class KernelFunctionMergeHistoryStrategy(MergeHistoryStrategy):
     """A strategy that merges the last message from the original history with the new history."""
 

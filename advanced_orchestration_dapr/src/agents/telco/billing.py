@@ -1,10 +1,10 @@
 from typing import Annotated
-from sk_ext.basic_kernel import create_kernel
+from sk_ext.basic_kernel import create_service
 from semantic_kernel.agents import ChatCompletionAgent
 from semantic_kernel.connectors.ai import (
     FunctionChoiceBehavior,
 )
-from semantic_kernel.functions import kernel_function, KernelArguments
+from semantic_kernel.functions import kernel_function
 import json
 
 
@@ -107,18 +107,13 @@ class BillingAgentPlugin:
         return '{"error": "Customer not found"}'
 
 
-billing_agent_kernel = create_kernel()
-
-billing_agent_kernel.add_plugin(BillingAgentPlugin(), plugin_name="BillingAgent")
-settings = billing_agent_kernel.get_prompt_execution_settings_from_service_id("default")
-settings.function_choice_behavior = FunctionChoiceBehavior.Auto()
-
 billing_agent = ChatCompletionAgent(
     description="A billing support agent that can answer billing-related questions, like invoices, payment methods, and usage metrics",
     id="billing",
     name="Billing",
-    kernel=billing_agent_kernel,
-    arguments=KernelArguments(settings=settings),
+    service=create_service(),
+    function_choice_behavior=FunctionChoiceBehavior.Auto(),
+    plugins=[BillingAgentPlugin()],
     instructions="""
     You are a billing support agent that responds to customer inquiries.
     

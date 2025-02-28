@@ -4,7 +4,7 @@ load_dotenv(override=True)
 
 import chainlit as cl
 
-from dapr.actor import ActorInterface, actormethod, ActorProxy, ActorId
+from dapr.actor import ActorInterface, actormethod, ActorProxyFactory, ActorId
 from semantic_kernel.contents.chat_message_content import ChatMessageContent
 
 
@@ -38,7 +38,7 @@ async def on_message(message: cl.Message):
     # Create an actor proxy to the SKAgentActor
     # Thanks to Dapr, no need to worry about the
     # actor's location or how to communicate with it
-    proxy: SKAgentActorInterface = ActorProxy.create(
+    proxy: SKAgentActorInterface = ActorProxyFactory(http_timeout_seconds=120).create(
         actor_type="SKAgentActor",  # This is the actor type name
         actor_id=ActorId(session_id),
         actor_interface=SKAgentActorInterface,  # This is the actor interface, must match the one in the actor

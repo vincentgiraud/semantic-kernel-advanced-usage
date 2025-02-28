@@ -3,9 +3,9 @@ from semantic_kernel.agents import ChatCompletionAgent
 from semantic_kernel.connectors.ai import (
     FunctionChoiceBehavior,
 )
-from semantic_kernel.functions import kernel_function, KernelArguments
+from semantic_kernel.functions import kernel_function
 
-from sk_ext.basic_kernel import create_kernel
+from sk_ext.basic_kernel import create_service
 
 
 class TechnicalAgentPlugin:
@@ -65,21 +65,13 @@ class TechnicalAgentPlugin:
         return base_telemetry + extra_message + digit_message
 
 
-technical_agent_kernel = create_kernel()
-
-technical_agent_kernel.add_plugin(TechnicalAgentPlugin(), plugin_name="TechnicalAgent")
-
-settings = technical_agent_kernel.get_prompt_execution_settings_from_service_id(
-    "default"
-)
-settings.function_choice_behavior = FunctionChoiceBehavior.Auto()
-
 technical_agent = ChatCompletionAgent(
     description="A technical support agent that can answer technical questions",
     id="technical",
     name="TechnicalSupport",
-    kernel=technical_agent_kernel,
-    arguments=KernelArguments(settings=settings),
+    service=create_service(),
+    function_choice_behavior=FunctionChoiceBehavior.Auto(),
+    plugins=[TechnicalAgentPlugin()],
     instructions="""You are a technical support agent that responds to customer inquiries.
 
     Your task are:

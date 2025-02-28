@@ -3,8 +3,10 @@ from pydantic import BaseModel, Field
 import logging
 
 from semantic_kernel.agents import ChatCompletionAgent
-from sk_ext.basic_kernel import create_kernel
+from semantic_kernel.kernel import FunctionChoiceBehavior
 from semantic_kernel.functions import kernel_function
+
+from sk_ext.basic_kernel import create_service
 from typing import Annotated, Optional
 
 
@@ -54,10 +56,6 @@ class ActivationAgentPlugin:
             return f"ERROR Failed to queue activation: {e}"
 
 
-activation_agent_kernel = create_kernel()
-activation_agent_kernel.add_plugin(ActivationAgentPlugin, plugin_name="TechnicalAgent")
-
-
 activation_agent = ChatCompletionAgent(
     id="Activation",
     name="Activation",
@@ -78,7 +76,9 @@ activation_agent = ChatCompletionAgent(
     - At the end MUST sure to confirm activation to the user
     
     """,
-    kernel=activation_agent_kernel,
+    service=create_service(),
+    plugins=[ActivationAgentPlugin()],
+    function_choice_behavior=FunctionChoiceBehavior.Auto(),
     description="""Call this Agent if:
         - You need to activate a service or product Customer purchased
         - You need to activate a procedure that requires customer's personal information

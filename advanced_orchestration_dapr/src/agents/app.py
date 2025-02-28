@@ -1,14 +1,16 @@
-import logging
 from dotenv import load_dotenv
+
+load_dotenv(override=True, verbose=True)
 
 from sk_actor import SKAgentActor
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from dapr.ext.fastapi import DaprActor
 
-load_dotenv(override=True)
 
 # Configure logging
+import logging
+
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.WARN)
 logging.getLogger("sk_ext").setLevel(logging.DEBUG)

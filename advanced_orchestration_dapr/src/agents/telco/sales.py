@@ -1,11 +1,11 @@
 from typing import Annotated
 import json
-from sk_ext.basic_kernel import create_kernel
+from sk_ext.basic_kernel import create_service
 from semantic_kernel.agents import ChatCompletionAgent
 from semantic_kernel.connectors.ai import (
     FunctionChoiceBehavior,
 )
-from semantic_kernel.functions import kernel_function, KernelArguments
+from semantic_kernel.functions import kernel_function
 
 
 class SalesAgentPlugin:
@@ -63,18 +63,13 @@ class SalesAgentPlugin:
         return json.dumps(offers_public)
 
 
-sales_agent_kernel = create_kernel()
-sales_agent_kernel.add_plugin(SalesAgentPlugin(), plugin_name="SalesAgent")
-
-settings = sales_agent_kernel.get_prompt_execution_settings_from_service_id("default")
-settings.function_choice_behavior = FunctionChoiceBehavior.Auto()
-
 sales_agent = ChatCompletionAgent(
     description="A sales agent that can answer describe available offers",
     id="sales",
     name="Sales",
-    kernel=sales_agent_kernel,
-    arguments=KernelArguments(settings=settings),
+    service=create_service(),
+    plugins=[SalesAgentPlugin()],
+    function_choice_behavior=FunctionChoiceBehavior.Auto(),
     instructions="""
 You are a sales person that responds to customer inquiries.
 

@@ -5,7 +5,6 @@ from semantic_kernel.kernel import Kernel
 from semantic_kernel.functions.kernel_arguments import KernelArguments
 from semantic_kernel.functions.kernel_function import KernelFunction
 from semantic_kernel.kernel_pydantic import KernelBaseModel
-from semantic_kernel.utils.experimental_decorator import experimental_class
 from semantic_kernel.contents.utils.author_role import AuthorRole
 
 if TYPE_CHECKING:
@@ -14,7 +13,6 @@ if TYPE_CHECKING:
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-@experimental_class
 class FeedbackStrategy(KernelBaseModel):
     """A strategy for determining when a Planned Team should terminate, and provide feedback to reiterate the plan if needed."""
 
@@ -31,7 +29,6 @@ class FeedbackResponse(KernelBaseModel):
     feedback: str
 
 
-@experimental_class
 class DefaultFeedbackStrategy(FeedbackStrategy):
     """A simple feedback strategy that always returns False and an empty string."""
 
@@ -41,7 +38,6 @@ class DefaultFeedbackStrategy(FeedbackStrategy):
         return True, ""
 
 
-@experimental_class
 class KernelFunctionFeedbackStrategy(FeedbackStrategy):
     """A strategy for determining when a Planned Team should terminate, and provide feedback to reiterate the plan if needed."""
 
