@@ -9,7 +9,15 @@ This repo showcases a sample AI-enabled customer support application that levera
 
 Additionally, the application leverages [Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/) and [Dapr](https://dapr.io) to enable the [_Virtual Actor pattern_](https://docs.dapr.io/developing-applications/building-blocks/actors/actors-overview/) for agentic teams and natively handle `ChatHistory` persistence via Dapr's [state store](https://docs.dapr.io/developing-applications/building-blocks/state-management/), ensuring that the application can scale seamlessly.
 
-## Example
+## Rationale
+
+- Default orchestration logic is based on the agent names only, which is not always sufficient to determine the best agent for a given ask.
+- Complex asks may require the involvement of multiple agents in a row to _divide and conquer_ the task, which can be difficult to manage without a _goal-oriented_, _multi-step_ orchestration strategy.
+- Hosting agents and orchestrator in the same process can lead to performance bottlenecks and maintainability issues.
+- Persisting conversation state (`ChatHistory`) poses challenges in terms of scalability and reliability, especially to avoid concurrent writes to the same conversation.
+- Tracking agentic team steps and results is important for debugging and improving the system.
+
+## Visual Example
 
 In this case, the user asks a question that requires the involvement of multiple agents, which are able to collaborate and produce a composite answer.
 
