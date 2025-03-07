@@ -20,9 +20,11 @@ Additional, we do enforce [authentication to the DirectLine API](https://learn.m
 
 ## Usage
 
-> [!NOTE] Working with Copilot Studio Agents requires a [subscription](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions) to Microsoft Copilot Studio.
+> [!NOTE]
+> Working with Copilot Studio Agents requires a [subscription](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions) to Microsoft Copilot Studio.
 
-> [!TIP] In this case, we suggest to start with a simple Q&A Agent and supply a PDF to answer some questions. You can find a free samples like [Microsoft Surface Pro 4 User Guide](https://download.microsoft.com/download/2/9/B/29B20383-302C-4517-A006-B0186F04BE28/surface-pro-4-user-guide-EN.pdf)
+> [!TIP]
+> In this case, we suggest to start with a simple Q&A Agent and supply a PDF to answer some questions. You can find a free samples like [Microsoft Surface Pro 4 User Guide](https://download.microsoft.com/download/2/9/B/29B20383-302C-4517-A006-B0186F04BE28/surface-pro-4-user-guide-EN.pdf)
 
 1. [Create a new agent](https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-get-started?tabs=web) in Copilot Studio
 2. [Publish the agent](https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-fundamentals-publish-channels?tabs=web)
