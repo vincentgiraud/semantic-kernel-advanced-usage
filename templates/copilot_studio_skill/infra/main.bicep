@@ -22,9 +22,15 @@ param openAIName string
 @description('Name of the Azure Resource Group where the OpenAI resource is located')
 param openAIResourceGroupName string
 
+@description('Name for Teams App registration')
+param teamsAppName string = 'sk-copilot'
+@description('ID for Teams App registration, if not provided, a new one will be created')
+param teamsAppId string = newGuid()
+
 @description('Azure Bot app ID')
 param botAppId string
 @description('Azure Bot app password')
+@secure()
 param botPassword string
 @description('Azure Bot tenant ID')
 param botTenantId string
@@ -88,17 +94,6 @@ module openAI './openAI.bicep' = {
   }
 }
 
-module cosmos 'cosmos.bicep' = {
-  name: 'cosmos'
-  scope: rg
-  params: {
-    uniqueId: uniqueId
-    prefix: prefix
-    userAssignedIdentityPrincipalId: uami.outputs.principalId
-    currentUserId: principalType == 'User' ? currentUserId : ''
-  }
-}
-
 module aca './aca.bicep' = {
   name: 'aca'
   scope: rg
@@ -112,29 +107,28 @@ module aca './aca.bicep' = {
     applicationInsightsConnectionString: appin.outputs.applicationInsightsConnectionString
     openAiApiKey: '' // Force ManId, otherwise set openAI.listKeys().key1
     openAiEndpoint: openAI.outputs.openAIEndpoint
-    cosmosDbEndpoint: cosmos.outputs.cosmosDbEndpoint
-    cosmosDbDatabaseName: cosmos.outputs.cosmosDbDatabase
-    cosmosDbContainerName: cosmos.outputs.cosmosDbContainer
     userAssignedIdentityClientId: uami.outputs.clientId
     apiAppExists: apiAppExists
     botAppId: botAppId
     botPassword: botPassword
     botTenantId: botTenantId
+    teamAppName: teamsAppName
+    teamsAppId: teamsAppId
   }
 }
 
 
-// module bot 'bot.bicep' = {
-//   name: 'bot'
-//   scope: rg
-//   params: {
-//     uniqueId: uniqueId
-//     prefix: prefix
-//     userAssignedIdentityResourceId: uami.outputs.identityId
-//     userAssignedIdentityPrincipalId: uami.outputs.principalId
-//     messagesEndpoint: aca.outputs.messagesEndpoint
-//   }
-// }
+module bot 'bot.bicep' = {
+  name: 'bot'
+  scope: rg
+  params: {
+    uniqueId: uniqueId
+    prefix: prefix
+    botAppId: botAppId
+    botTenantId: botTenantId
+    messagesEndpoint: aca.outputs.messagesEndpoint
+  }
+}
 
 // These outputs are copied by azd to .azure/<env name>/.env file
 // post provision script will use these values, too
@@ -146,3 +140,8 @@ output AZURE_CONTAINER_REGISTRY_ENDPOINT string = acrModule.outputs.acrEndpoint
 output AZURE_OPENAI_MODEL string = openAIModel
 output AZURE_OPENAI_ENDPOINT string = openAI.outputs.openAIEndpoint
 output AZURE_OPENAI_API_VERSION string = openAIApiVersion
+output ENDPOINT_URL string = aca.outputs.messagesEndpoint
+output MANIFEST_URL string = aca.outputs.manifestUrl
+output HOME_URL string = aca.outputs.homeUrl
+output BOT_APP_ID string = botAppId
+output BOT_TENANT_ID string = botTenantId

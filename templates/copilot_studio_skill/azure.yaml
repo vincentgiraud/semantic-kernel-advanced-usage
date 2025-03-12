@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: azure-bot
+services:
+    api:
+        project: src/api
+        host: containerapp
+        language: python
+        docker:
+            path: dockerfile
+            remoteBuild: true
+# hooks:
+#   postprovision: 
+#     shell: pwsh
+#     run: |
+#         # Get values from azd env
+#         $url = azd env get-value HOME_URL
+#         $botId = azd env get-value BOT_APP_ID
+#         $botTenantId = azd env get-value BOT_TENANT_ID
+
+#         # Update entra app with home page url as api endpoint
+#         az login --tenant $botTenantId
+#         az ad app update --id $botId --set web.homePageUrl=$url
