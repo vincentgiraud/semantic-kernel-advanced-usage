@@ -9,6 +9,7 @@ This repository contains advanced usage examples for [Semantic Kernel](https://g
 - **Process framework**
 - **Tracing and telemetry**
 - **Copilot Studio integration**
+- **Copilot Agent with Semantic Kernel and MS Graph APIs**
 
 ## Scenarios
 
@@ -20,6 +21,8 @@ This repository contains advanced usage examples for [Semantic Kernel](https://g
 - [`copilot_studio_skill`](/templates/copilot_studio_skill/README.md): Demonstrates how to use Semantic Kernel to create a skill for Microsoft Copilot Studio.
 - [`natural_language_to_SQL`](/templates/natural_language_to_SQL/README.md): Demonstrates a natural language query to SQL using a state machine architecture supported by the Semantic Kernel Process Framework.
 - [`copilot_studio`](/templates/copilot_studio/README.md): Demonstrates how to use Microsoft Copilot Agents as they were first-party agents in Semantic Kernel.
+- [`copilot-agent-ms-graph`](/templates/copilot-agent-ms-graph/README.md): Demonstrates how to deploy a Semantic Kernel-powered Agent to Copilot that uses Microsoft MS Graph APIs.
+
 
 ## Contributing
 
