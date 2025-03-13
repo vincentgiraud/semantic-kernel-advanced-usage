@@ -1,0 +1,28 @@
+# TeamsFx files
+
+.env
+appPackage/build
+
+# python virtual environment
+.venv/
+__pycache__/
+
+# others
+.deployment/
+node_modules/
+devTools/*.log
+
+# Dev tool directories
+/devTools/
+
+config.cfg
+test_*.ipynb
+
+
+.chainlit/
+.files/
+chainlit.md
+test*.py
+test*.ipynb
+
+deployment/
