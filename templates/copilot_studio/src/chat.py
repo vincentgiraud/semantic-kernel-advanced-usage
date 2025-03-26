@@ -7,6 +7,10 @@ from semantic_kernel.contents.chat_history import ChatHistory
 
 load_dotenv(override=True)
 
+logging.basicConfig(level=logging.INFO)
+logging.getLogger("direct_line_agent").setLevel(logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 agent = DirectLineAgent(
     id="copilot_studio",
     name="copilot_studio",
@@ -14,10 +18,6 @@ agent = DirectLineAgent(
     bot_secret=os.getenv("BOT_SECRET"),
     bot_endpoint="https://europe.directline.botframework.com/v3/directline",
 )
-
-logging.basicConfig(level=logging.INFO)
-logging.getLogger("direct_line_agent").setLevel(logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 
 @cl.on_chat_start

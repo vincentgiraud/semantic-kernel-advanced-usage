@@ -14,8 +14,6 @@ param botAppId string
 @secure()
 param botPassword string
 param botTenantId string
-param teamAppName string
-param teamsAppId string
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' existing = {
   name: logAnalyticsWorkspaceName
@@ -97,12 +95,10 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-11-02-preview' = {
             { name: 'BOT_APP_ID', value: botAppId }
             { name: 'BOT_PASSWORD', value: botPassword }
             { name: 'BOT_TENANT_ID', value: botTenantId }
-            { name: 'TEAMS_APP_NAME', value: teamAppName }
-            { name: 'TEAMS_APP_ID', value: teamsAppId }
             { name: 'APPLICATIONINSIGHTS_CONNECTIONSTRING', value: applicationInsightsConnectionString }
             { name: 'APPLICATIONINSIGHTS_SERVICE_NAME', value: 'api' }
             { name: 'AZURE_OPENAI_ENDPOINT', value: openAiEndpoint }
-            { name: 'AZURE_OPENAI_MODEL', value: 'gpt-4o-mini' }
+            { name: 'AZURE_OPENAI_CHAT_DEPLOYMENT_NAME', value: 'gpt-4o-mini' }
             { name: 'AZURE_OPENAI_API_KEY', value: '' }
             { name: 'AZURE_OPENAI_API_VERSION', value: '2024-08-01-preview' }
           ]
