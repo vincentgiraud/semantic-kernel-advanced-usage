@@ -33,15 +33,14 @@ class SqlProcess():
     async def start(self, query):
         console.print(f"[green]Processing query:[/green] {query}")
         initial_input = TableNamesStepInput(user_query=query)
-
-        result = await start(
+    
+        state = await start(
                 process=self.process,
                 kernel=self.kernel,
                 initial_event=KernelProcessEvent(id=SQLEvents.StartProcess, data=initial_input)
             )
-            
         console.print("\n[green]Process completed![/green]")
-        return result
+        return state
 
     def get_sql_process(self) -> KernelProcess:
         """

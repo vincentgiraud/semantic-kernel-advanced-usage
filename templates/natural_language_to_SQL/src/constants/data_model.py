@@ -38,70 +38,70 @@ table_descriptions = [
 ]
 
 
-json_rules = {
+json_rules = """
   "rules": [
-    {
+    {{
       "id": "HC1",
       "name": "Chronic Condition Filtering",
       "condition": "Look for patients with chronic conditions in the question '{question}'.",
       "action": "You will need to filter records where 'INSURANCE_REC.CHRONIC_CONDITIONS_NUM > 0'. If the question specifically asks about a certain threshold of chronic conditions, use an appropriate comparison operator with that threshold value."
-    },
-    {
+    }},
+    {{
       "id": "HC2",
       "name": "Device Activity Requirement",
       "condition": "Check if the question '{question}' is asking for analysis of device usage or effectiveness.",
       "action": "If no other condition is set, include this constraint in the query: 'DEVICE_REC.DEVICE_INACTIVE_HOURS < 12' (The device must be idle less than 12 hours to be considered active for analysis purposes)."
-    },
-    {
+    }},
+    {{
       "id": "HC3",
       "name": "Telehealth Patients",
       "condition": "Look for telehealth users or remote care patients in the question '{question}'.",
       "action": "You should use one of the following constraints: 'INSURANCE_REC.PRIMARY_CARE_TECHNOLOGY_ID = 'TeleHealth'' or 'INSURANCE_REC.SPECIALIST_TECHNOLOGY_ID = 'TeleHealth'' or 'INSURANCE_REC.MONITORING_TECHNOLOGY_ID = 'Remote'' depending on which type of telehealth care is most relevant to the question."
-    },
-    {
+    }},
+    {{
       "id": "HC4",
       "name": "High-Risk Patients",
       "condition": "You are asked about high-risk patients in the question '{question}'.",
       "action": "Consider as high-risk patients those with 'HEALTH_REC.ELEVATED_RISK_PERCENTAGE > 0.5' (more than 50% of sensors indicating elevated risk) or 'HEALTH_REC.OVERALL_HEALTH_INDEX < 70'."
-    },
-    {
+    }},
+    {{
       "id": "HC5",
       "name": "Medication Adherence Categories",
       "condition": "The question '{question}' asks about medication adherence levels or categories.",
       "action": "Use the 'ADHERENCE_LEVEL' field instead of the raw 'ADHERENCE_RATE' value. The 'ADHERENCE_LEVEL' field categorizes adherence as 'High', 'Medium', 'Low', or 'None', which provides a more meaningful interpretation than the numeric value."
-    },
-    {
+    }},
+    {{
       "id": "HC6",
       "name": "Patient Age Grouping",
       "condition": "You are using the field 'INSURANCE_REC.PATIENT_AGE_NUM' in the query.",
       "action": "For demographic analysis, it's preferable to use the field 'INSURANCE_REC.PATIENT_AGE_GROUP_CD' instead of 'INSURANCE_REC.PATIENT_AGE_NUM' to ensure consistent age grouping across analyses."
-    },
-    {
+    }},
+    {{
       "id": "HC7",
       "name": "Wearable Device Filtering",
       "condition": "Look for information on wearable devices in the question '{question}'.",
       "action": "Use the constraint 'DEVICE_CATEGORY = 'Wearable'' when filtering on the HC_Patient_Device_Details_v3 table. For more specific wearable sensor metrics, use fields from 'MONITORING_REC.WEARABLE_REC.ALL_TYPES_REC' in the HC_Patient_Daily_Summary_v3 table."
-    },
-    {
+    }},
+    {{
       "id": "HC8",
       "name": "Patient Count Calculation",
       "condition": "You are asked to count the number of patients in the question '{question}'.",
       "action": "Use 'COUNT(DISTINCT PATIENT_ID)' instead of 'COUNT(PATIENT_ID)' to ensure accurate patient counts without duplication from multiple records per patient."
-    },
-    {
+    }},
+    {{
       "id": "HC9",
       "name": "FDA Approved Devices",
       "condition": "The question '{question}' specifically mentions medical-grade or FDA-approved devices.",
       "action": "Include the constraint 'DEVICE_FDA_APPROVED = true' in your query. For queries requiring higher medical standards, also consider including 'DEVICE_MEDICAL_GRADE IN ('Class II', 'Class III')' for devices that undergo more rigorous regulatory scrutiny."
-    },
-    {
+    }},
+    {{
       "id": "HC10",
       "name": "Health Index Interpretation",
       "condition": "The query references health index fields such as 'WELLNESS_INDEX', 'VITAL_SIGNS_INDEX', 'ACTIVITY_INDEX', or 'OVERALL_HEALTH_INDEX'.",
       "action": "Keep in mind that these index values range from 0 to 100, with higher values indicating better health. Consider these general interpretations: values >= 90 are 'Excellent', 75-89 are 'Good', 60-74 are 'Fair', and < 60 are 'Concerning'."
-    }
+    }}
   ]
-}
+"""
 
 
 global_database_model = [
@@ -1429,9 +1429,9 @@ global_database_model = [
 ]
 
 
-# Define your global database model
-global_database_model = {
-    "tables": table_descriptions,
-    "rules": json_rules
-}
+# # Define your global database model
+# global_database_model = {
+#     "tables": table_descriptions,
+#     "rules": json_rules
+# }
 

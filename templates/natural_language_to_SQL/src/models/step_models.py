@@ -8,15 +8,15 @@ from typing import List, Any, Union, Literal, Optional
 # Structured Outputs Models
 
 class ValidTableName(BaseModel):
-    table_name: Literal['CBD_Summary_HGU_Detail_Daily_v10',
-                        'CBD_Summary_HGU_Stations_Daily_v10',
-                        'D_CBD_Static_Geo_Area_v6',
-                        'D_CBD_Static_Geo_Area_Level2_v6',
-                        'D_CBD_Static_Geo_Area_Level3_v6',
-                        'D_CBD_Static_Geo_Area_Level4_v6',
-                        'D_CBD_Static_Station_Type_v6',
-                        'D_Segment_v8',
-                        'D_Fixed_Tariff_Plan_v8']
+    table_name: Literal['HC_Patient_Daily_Summary_v3',
+                        'HC_Patient_Device_Details_v3',
+                        'HC_Patient_Medication_Summary_v3',
+                        'D_Patient_Type_v3',
+                        'D_Insurance_Plan_v3',
+                        'D_HC_Geography_v3',
+                        'D_HC_Procedures_v3',
+                        'D_HC_Providers_v3',
+                        'D_Patient_Devices_v3']
 
 
 class GetTableNames(BaseModel):

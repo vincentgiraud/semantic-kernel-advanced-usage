@@ -2,7 +2,6 @@ import sys
 sys.path.append("../../")
 
 import os
-import json
 from rich.console import Console
 from semantic_kernel.processes.kernel_process import KernelProcessStep, KernelProcessStepContext
 from semantic_kernel.kernel import Kernel

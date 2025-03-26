@@ -1,6 +1,6 @@
 import sys
 sys.path.append("../../")
-
+import json
 from rich.console import Console
 from semantic_kernel.processes.kernel_process import KernelProcessStep, KernelProcessStepContext
 from semantic_kernel.kernel import Kernel
@@ -23,8 +23,16 @@ class ExecutionStep(KernelProcessStep):
             response = SQLite_exec_sql(data.sql_statement)
             console.print(response)
             print("SQL execution succeeded.")
-            await context.emit_event(process_event=SQLEvents.ExecutionSuccess, data=data.sql_statement)
+            resp_dd = {"query": data.user_query, "response": response}
+
+            console.print("resp_dd", resp_dd)
+
+            with open("response.json", "w") as f:
+                json.dump(resp_dd, f, indent=4)
+
             print("Emitted event: ExecutionSuccess.")
+            await context.emit_event(process_event=SQLEvents.ExecutionSuccess, data=response)
+
         except Exception as e:
             error_description = f"Execution error: {str(e)}"
             result = Execution2TableNames(
@@ -35,4 +43,8 @@ class ExecutionStep(KernelProcessStep):
                 error_description=error_description
             )
             await context.emit_event(process_event=SQLEvents.ExecutionError, data=result)
+            resp_dd = {"query": data.user_query, "response": error_description}
+                
+            with open("response.json", "w") as f:
+                json.dump(resp_dd, f, indent=4)
             print("Emitted event: ExecutionError.")

@@ -256,17 +256,27 @@ The SQL query must be compatible with the SQL dialect of **SQLITE DATABASE**.
 few_shot_examples ="""
 
 ### Example #1
-User Query: 2025.
-Generated Query: 
-
-
-### Example #2
-User Query: 
-Generated Query: 
-
-
-### Example #3
-User Query: 
-Generated Query: 
-
+User Query: from which counties do our providers come from?
+Generated Query: SELECT DISTINCT G.COUNTY FROM D_HC_Providers_v3 AS P JOIN D_HC_Geography_v3 AS G ON P.ZIP_CODE = G.ZIP_CODE;
 """
+# ### Example #2
+# User Query: What is the average wellness index for patients with chronic conditions?
+# Generated Query: SELECT AVG(HEALTH_REC.WELLNESS_INDEX) FROM HC_Patient_Daily_Summary_v3 WHERE INSURANCE_REC.CHRONIC_CONDITIONS_NUM > 0;
+
+# ### Example #3
+# User Query: Find the top 5 medications with the lowest adherence rates
+# Generated Query: SELECT MEDICATION_NAME, AVG(ADHERENCE_RATE) AS AVG_ADHERENCE FROM HC_Patient_Medication_Summary_v3 GROUP BY MEDICATION_NAME ORDER BY AVG_ADHERENCE ASC LIMIT 5;
+
+# ### Example #4
+# User Query: How many patients are using wearable devices for remote monitoring?
+# Generated Query: SELECT COUNT(DISTINCT PDS.PATIENT_ID) FROM HC_Patient_Daily_Summary_v3 PDS JOIN HC_Patient_Device_Details_v3 PDD ON PDS.PATIENT_ID = PDD.PATIENT_ID WHERE PDD.DEVICE_CATEGORY = 'Wearable' AND PDS.INSURANCE_REC.MONITORING_TECHNOLOGY_ID = 'Remote';
+
+# ### Example #5
+# User Query: Which insurance plans cover telehealth services and what is their average premium?
+# Generated Query: SELECT PLAN_NAME, AVG(INSURANCE_REC.PREMIUM_AMOUNT) AS AVG_PREMIUM FROM HC_Patient_Daily_Summary_v3 PDS JOIN D_Insurance_Plan_v3 IP ON PDS.INSURANCE_REC.INSURANCE_PLAN_ID = IP.PLAN_ID WHERE IP.TELEHEALTH_COVERED = true GROUP BY PLAN_NAME;
+
+# ### Example #6
+# User Query: Find the medication adherence level distribution for elderly patients (age 65+)
+# Generated Query: SELECT ADHERENCE_LEVEL, COUNT(*) AS PATIENT_COUNT FROM HC_Patient_Medication_Summary_v3 MED JOIN HC_Patient_Daily_Summary_v3 PDS ON MED.PATIENT_ID = PDS.PATIENT_ID WHERE PDS.INSURANCE_REC.PATIENT_AGE_GROUP_CD = '65+' GROUP BY ADHERENCE_LEVEL ORDER BY PATIENT_COUNT DESC;
+
+# """

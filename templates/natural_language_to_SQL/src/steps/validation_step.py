@@ -30,7 +30,7 @@ class ValidationStep(KernelProcessStep):
                 if table.table_name == model_table['TableName']:
                     relevant_tables.append(model_table)
                     break
-
+                    
         prompt = sql_validation_prompt.format(
             question=user_query, 
             sql_query=data.sql_statement, 

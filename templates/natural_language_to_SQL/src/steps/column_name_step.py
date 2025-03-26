@@ -26,7 +26,6 @@ class ColumnNameStep(KernelProcessStep):
                 if table.table_name == model_table['TableName']:
                     relevant_tables.append(model_table)
                     break
-        
         rules_with_query = json.dumps(json_rules, indent=4)
         
         prompt = get_table_column_names_prompt_template.format(

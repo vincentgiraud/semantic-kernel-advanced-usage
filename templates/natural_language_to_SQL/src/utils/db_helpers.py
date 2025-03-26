@@ -1,7 +1,6 @@
 import sys
 sys.path.append("../../")
 import sqlite3
-import pandas as pd
 import os
 
 
@@ -11,17 +10,20 @@ import os
 #####################################################
 
 # Run in SQLite the SQL statement
-SQLite_DbName = 'telco_hgu_2.db'
-# SQLite_DbName = 'healthcare_data.db'
+# SQLite_DbName = 'telco_hgu_2.db'
+SQLite_DbName = 'healthcare_data.db'
+db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../")
+
 
 def SQLite_exec_sql(sql):
     """Execute SQL query and return results in a standardized format."""
     if sql is None:
         return None
 
+    print("Accesing Database", os.path.join(db_path, SQLite_DbName))
     sql = sql.replace('REC.', 'REC_')  # SQLite does not support . in the column names
     try:
-        conn = sqlite3.connect(SQLite_DbName)
+        conn = sqlite3.connect(os.path.join(db_path, SQLite_DbName))
         cursor = conn.cursor()
 
         print(f"* Running SQL in SQLite ['{sql}']...\n")

@@ -1,6 +1,10 @@
 import sys
+import os
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
 sys.path.append("../../")
-import asyncio
 from semantic_kernel.contents import ChatHistory
 from semantic_kernel.connectors.ai.chat_completion_client_base import ChatCompletionClientBase
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
@@ -31,7 +35,11 @@ async def call_chat_completion(kernel, user_query: str) -> str:
     # Get chat completion service and generate response
     chat_service: ChatCompletionClientBase = kernel.get_service(service_id=SERVICE_ID)
     settings = chat_service.instantiate_prompt_execution_settings(service_id=SERVICE_ID)
-    settings.reasoning_effort = REASONING_EFFORT
+
+    print(f"Model used: {os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT_NAME']}")
+    if (os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT_NAME'] == "o1") or \
+       (os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT_NAME'] == "o3-mini"):
+        settings.reasoning_effort = REASONING_EFFORT
 
     chat_history = ChatHistory()
     chat_history.add_user_message(user_query)
@@ -59,7 +67,11 @@ async def call_chat_completion_structured_outputs(kernel, user_query: str, respo
     chat_service: ChatCompletionClientBase = kernel.get_service(service_id=SERVICE_ID)
     settings = chat_service.instantiate_prompt_execution_settings(service_id=SERVICE_ID)
     settings.response_format = response_format
-    settings.reasoning_effort = REASONING_EFFORT
+
+    print(f"Model used: {os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT_NAME']}")
+    if (os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT_NAME'] == "o1") or \
+       (os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT_NAME'] == "o3-mini"):
+        settings.reasoning_effort = REASONING_EFFORT
 
     chat_history = ChatHistory()
     chat_history.add_user_message(user_query)
