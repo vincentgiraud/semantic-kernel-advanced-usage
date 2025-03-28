@@ -56,7 +56,7 @@ class SKAgentActor(Actor, SKAgentActorInterface):
     async def invoke(self, input_message: str) -> list[ChatMessageContent]:
         tracer = trace.get_tracer(__name__)
         with tracer.start_as_current_span("sk_actor.invoke") as span:
-            span.set_attribute("operation_Id", self.id)
+            span.set_attribute("operation_Id", str(self.id))
             try:
                 # Option 1: Add as baggage so that it propagates with the context.
                 # baggage.set_baggage("operation_Id", self.id)
