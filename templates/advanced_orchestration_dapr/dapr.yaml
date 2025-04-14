@@ -3,13 +3,13 @@ apps:
   - appID: chat
     appDirPath: src/chat
     appProtocol: http
-    appPort: 5000
-    command: ["chainlit", "run", "--headless", "chat.py", "--port", "5000"]
+    appPort: 5100
+    command: ["chainlit", "run", "--headless", "chat.py", "--port", "5100"]
   - appID: agents
     appDirPath: src/agents
     resourcesPaths: 
       - .dapr
     appProtocol: http
-    appPort: 5001
+    appPort: 5101
     appHealthCheckPath: "/healthz"
-    command: ["uvicorn", "app:app", "--port", "5001"]
+    command: ["uvicorn", "app:app", "--port", "5101"]
