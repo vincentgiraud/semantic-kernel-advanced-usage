@@ -49,8 +49,22 @@ The architecture is modular, with distinct modules for managing business rules, 
 
 4. **Review Output**: The results of the query will be displayed in the console, and any prompt outputs will be stored in the `output_prompts/` directory.
 
+5. **Launch the UI**: as a second option, you can also launch the UI with the below command to see the solution in realtime, and then browse to [http://localhost:80/](http://localhost:80/)
+
+   ```bash
+   python src/server.py
+   ```
+
+<br/>
+<br/>
+
 
 ![NL2SQL Demo](./images/NL2SQL_GIF.gif)
+
+<br/>
+<br/>
+
+
 
 ## Conclusion
 
