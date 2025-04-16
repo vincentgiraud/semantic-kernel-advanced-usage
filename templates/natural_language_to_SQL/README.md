@@ -49,6 +49,9 @@ The architecture is modular, with distinct modules for managing business rules, 
 
 4. **Review Output**: The results of the query will be displayed in the console, and any prompt outputs will be stored in the `output_prompts/` directory.
 
+
+![NL2SQL Demo](./images/NL2SQL_GIF.gif)
+
 ## Conclusion
 
 This project bridges the gap between non-technical users and database management systems. By allowing users to simply ask questions in natural language and receive accurate SQL queries, it facilitates agile business intelligence and supports data-driven decision-making processes.
