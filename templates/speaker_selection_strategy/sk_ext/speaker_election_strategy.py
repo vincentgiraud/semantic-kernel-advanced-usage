@@ -74,7 +74,7 @@ class LastNMessagesHistoryReducer(ChatHistoryReducer):
         if len(filtered_messages) <= self.target_count:
             self.messages = filtered_messages
             return None
-        self.messages = filtered_messages[-self.target_count:]
+        self.messages = filtered_messages[-self.target_count :]
         return self
 
 

@@ -1,8 +1,5 @@
 from typing import Annotated
 from semantic_kernel.agents import ChatCompletionAgent
-from semantic_kernel.connectors.ai import (
-    FunctionChoiceBehavior,
-)
 from semantic_kernel.functions import kernel_function
 
 from sk_ext.basic_kernel import create_service
@@ -70,7 +67,6 @@ technical_agent = ChatCompletionAgent(
     id="technical",
     name="TechnicalSupport",
     service=create_service(),
-    function_choice_behavior=FunctionChoiceBehavior.Auto(),
     plugins=[TechnicalAgentPlugin()],
     instructions="""You are a technical support agent that responds to customer inquiries.
 
