@@ -29,7 +29,9 @@
         "vscode-icons-team.vscode-icons",
         "teamsdevapp.vscode-ai-foundry",
         "ms-azuretools.vscode-azurecontainerapps",
-        "ms-vscode.azurecli"
+        "ms-vscode.azurecli",
+        "bierner.markdown-mermaid",
+        "redhat.vscode-yaml"
       ]
     }
   }
