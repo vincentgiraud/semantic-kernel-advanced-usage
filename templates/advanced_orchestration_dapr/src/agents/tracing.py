@@ -1,7 +1,6 @@
 # See https://learn.microsoft.com/en-us/semantic-kernel/concepts/enterprise-readiness/observability/telemetry-with-app-insights?tabs=Powershell&pivots=programming-language-python
 
 import logging
-import os
 
 from azure.monitor.opentelemetry.exporter import (
     AzureMonitorLogExporter,
@@ -22,17 +21,27 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.semconv.resource import ResourceAttributes
 from opentelemetry.trace import set_tracer_provider
 
-# Replace the connection string with your Application Insights connection string
-connection_string = os.getenv("APPLICATIONINSIGHTS_CONNECTIONSTRING")
-service_name = os.getenv("APPLICATIONINSIGHTS_SERVICE_NAME", "agents")
+from config import config
 
 # Create a resource to represent the service/sample
-resource = Resource.create({ResourceAttributes.SERVICE_NAME: service_name})
+resource = Resource.create({ResourceAttributes.SERVICE_NAME: config.APPLICATIONINSIGHTS_SERVICE_NAME})
+
+# Suppress health probe logs from the Uvicorn access logger
+# Dapr runtime calls it frequently and pollutes the logs
+
+
+class HealthProbeFilter(logging.Filter):
+    def filter(self, record):
+        # Suppress log messages containing the health probe request
+        return (
+            "/health" not in record.getMessage()
+            and "/healthz" not in record.getMessage()
+        )
 
 
 def set_up_logging():
-    logging.warning(f"Connection string: {connection_string}")
-    exporter = AzureMonitorLogExporter.from_connection_string(connection_string)
+    logging.warning(f"Connection string: {config.APPLICATIONINSIGHTS_CONNECTIONSTRING}")
+    exporter = AzureMonitorLogExporter.from_connection_string(config.APPLICATIONINSIGHTS_CONNECTIONSTRING)
 
     # Create and set a global logger provider for the application.
     logger_provider = LoggerProvider(resource=resource)
@@ -53,9 +62,17 @@ def set_up_logging():
     # TODO check how to keep console logging less verbose without limiting remote traces
     # logger.setLevel(logging.INFO)
 
+    # Configure logging
+    logging.basicConfig(level=logging.WARN)
+    logging.getLogger("sk_ext").setLevel(logging.DEBUG)
+
+    # Add the filter to the Uvicorn access logger
+    uvicorn_access_logger = logging.getLogger("uvicorn.access")
+    uvicorn_access_logger.addFilter(HealthProbeFilter())
+
 
 def set_up_tracing():
-    exporter = AzureMonitorTraceExporter(connection_string=connection_string)
+    exporter = AzureMonitorTraceExporter(connection_string=config.APPLICATIONINSIGHTS_CONNECTIONSTRING)
 
     # Initialize a trace provider for the application. This is a factory for creating tracers.
     tracer_provider = TracerProvider(resource=resource)
@@ -67,7 +84,7 @@ def set_up_tracing():
 
 
 def set_up_metrics():
-    exporter = AzureMonitorMetricExporter(connection_string=connection_string)
+    exporter = AzureMonitorMetricExporter(connection_string=config.APPLICATIONINSIGHTS_CONNECTIONSTRING)
 
     # Initialize a metric provider for the application. This is a factory for creating meters.
     meter_provider = MeterProvider(

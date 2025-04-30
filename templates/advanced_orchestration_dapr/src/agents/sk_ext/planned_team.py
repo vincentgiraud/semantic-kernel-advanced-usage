@@ -98,7 +98,8 @@ class PlannedTeam(TeamBase):
                     message = response.message
                     logger.debug(f"Agent '{selected_agent.id}' sent message: {message}")
 
-                    yield message
+                    if not self.fork_history:
+                        yield message
 
             # Provide feedback and check if the plan can complete
             ok, feedback = await self.feedback_strategy.provide_feedback(
