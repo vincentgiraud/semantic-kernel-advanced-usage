@@ -9,7 +9,7 @@
     "ghcr.io/devcontainers/features/powershell:1": {}
   },
   "postCreateCommand": "",
-  "forwardPorts": [5000, 5001, 5678],
+  "forwardPorts": [5000, 5001, 5678, 4317, 18888],
   "remoteUser": "vscode",
   "customizations": {
     "vscode": {
