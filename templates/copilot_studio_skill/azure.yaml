@@ -9,15 +9,17 @@ services:
         docker:
             path: dockerfile
             remoteBuild: true
-# hooks:
-#   postprovision: 
-#     shell: pwsh
-#     run: |
-#         # Get values from azd env
-#         $url = azd env get-value HOME_URL
-#         $botId = azd env get-value BOT_APP_ID
-#         $botTenantId = azd env get-value BOT_TENANT_ID
-
-#         # Update entra app with home page url as api endpoint
-#         az login --tenant $botTenantId
-#         az ad app update --id $botId --set web.homePageUrl=$url
+hooks:
+    postprovision:
+        windows:
+            shell: pwsh
+            run: |
+                python -m pip install -r infra/scripts/requirements.txt
+                python infra/scripts/patch_app_reg.py
+            continueOnError: false
+        posix:
+            shell: sh
+            run: |
+                python -m pip install -r infra/scripts/requirements.txt
+                python infra/scripts/patch_app_reg.py
+            continueOnError: false

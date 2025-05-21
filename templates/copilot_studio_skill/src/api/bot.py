@@ -2,6 +2,7 @@ from teams import Application, ApplicationOptions
 from teams.state import TurnState
 from botbuilder.core import MemoryStorage, TurnContext, MessageFactory
 from semantic_kernel.contents import ChatHistory
+from semantic_kernel.agents.chat_completion.chat_completion_agent import ChatHistoryAgentThread
 from botframework.connector.auth import AuthenticationConfiguration
 from botbuilder.integration.aiohttp import ConfigurationBotFrameworkAuthentication
 from botbuilder.schema import (
@@ -56,13 +57,15 @@ async def on_message(context: TurnContext, state: TurnState):
 
     # Get the chat_history from the conversation state
     chat_history: ChatHistory = state.conversation.get("chat_history")
+    # And rebuild the thread
+    thread = ChatHistoryAgentThread(
+        chat_history=chat_history,
+        thread_id=context.activity.id,
+    )
 
-    # Add the new user message
-    chat_history.add_user_message(user_message)
-
-    # Get the response from the semantic kernel agent (v1.22.0 and later)
+    # Get the response from the agent (v1.28.1 and later)
     sk_response = await agent.get_response(
-        history=chat_history, user_input=user_message
+        messages=user_message, thread=thread
     )
 
     # Store the updated chat_history back into conversation state

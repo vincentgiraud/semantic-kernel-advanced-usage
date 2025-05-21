@@ -1,8 +1,8 @@
-import os
 from openai import AsyncAzureOpenAI
 from semantic_kernel.kernel import Kernel
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+from config import config
 
 # See https://techcommunity.microsoft.com/blog/azuredevcommunityblog/using-keyless-authentication-with-azure-openai/4111521
 credential = DefaultAzureCredential()
@@ -13,16 +13,16 @@ token_provider = get_bearer_token_provider(
 
 def create_client() -> AsyncAzureOpenAI:
     return AsyncAzureOpenAI(
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-        azure_deployment=os.getenv("AZURE_OPENAI_MODEL"),
+        azure_endpoint=config.AZURE_OPENAI_ENDPOINT,
+        azure_deployment=config.AZURE_OPENAI_MODEL,
         azure_ad_token_provider=token_provider,
-        api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+        api_version=config.AZURE_OPENAI_API_VERSION,
     )
 
 
 def create_service(service_id: str = "default"):
     return AzureChatCompletion(
-        deployment_name=os.getenv("AZURE_OPENAI_MODEL"),
+        deployment_name=config.AZURE_OPENAI_MODEL,
         async_client=create_client(),
         service_id=service_id,
     )
